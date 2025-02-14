@@ -11,19 +11,19 @@ def init_dashboard(server):
         __name__,
         server=server,
         url_base_pathname='/dash/',
-        external_stylesheets=[dbc.themes.BOOTSTRAP]  # Add Bootstrap for better styling
+        external_stylesheets=[dbc.themes.BOOTSTRAP]  
     )
     
     df = pd.read_csv(Config.CAFE_DATA)
     df['Date'] = pd.to_datetime(df['Date'])
 
-    # 📊 Create Figures (with better styling)
+    
     def generate_daily_revenue_fig():
         daily_revenue = df.groupby('Date')['Total Price (INR)'].sum().reset_index()
         fig = px.bar(
             daily_revenue, x='Date', y='Total Price (INR)',
             title='Daily Revenue',
-            template='plotly_dark',  # Apply dark mode to match Bootstrap theme
+            template='plotly_dark',  # dark theme 
             color_discrete_sequence=['#1f77b4']
         )
         return fig
@@ -38,7 +38,7 @@ def init_dashboard(server):
         )
         return fig
 
-    # 🎨 Create Layout using Bootstrap Components
+    #Layout
     dash_app.layout = dbc.Container([
         dbc.NavbarSimple(
             brand="Cafe Analytics Dashboard",
