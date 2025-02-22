@@ -14,30 +14,62 @@ def init_dashboard(server):
         external_stylesheets=[dbc.themes.BOOTSTRAP]  
     )
     
+    # Load the dataset
     df = pd.read_csv(Config.CAFE_DATA)
-    df['Date'] = pd.to_datetime(df['Date'])
+    df["Date"] = pd.to_datetime(df["Date"])
+    df["Revenue"] = df["Quantity"] * df["Total Price (INR)"]
+    print(df["Payment Method"].unique())
 
+    # Aggregate counts for each payment method
+    payment_counts = df["Payment Method"].value_counts().reset_index()
+    payment_counts.columns = ["Payment Method", "Count"]
+
+    # Group by product and sum the quantity sold
+    top_products = df.groupby("Items Purchased")["Quantity"].sum().reset_index()
+
+    # Sort in descending order and take the top 10
+    top_products = top_products.sort_values(by="Quantity", ascending=False).head(10)
+
+    # Create a bar chart
+    fig = px.bar(
+    top_products, 
+    x="Quantity", 
+    y="Items Purchased",  
+    orientation="h",  
+    #title="Top 10 Most Sold Products", 
+    template='plotly_dark', 
+    labels={"Quantity": "Total Sold", "Product Name": "Product"},
+    text_auto=True
+)
+
+    # Reverse the order to show highest at the top
+    fig.update_layout(yaxis=dict(categoryorder="total ascending"))
+
+    # Group by week (start of the week) and sum revenue
+    weekly_revenue = df.resample("W", on="Date")["Revenue"].sum().reset_index()
+    monthly_revenue = df.resample("ME", on="Date")["Revenue"].sum().reset_index()
+
+
+    fig_weekly = px.line(
+    weekly_revenue, 
+    x="Date", 
+    y="Revenue", 
+    #title="Weekly Revenue Trend",
+    template='plotly_dark',
+    labels={"Date": "Week", "Revenue": "Total Revenue (₹)"},
+    markers=True
+    )
+
+    fig_payment = px.pie(
+    payment_counts, 
+    names="Payment Method", 
+    values="Count", 
+    #title="Payment Method Distribution",
+    template='plotly_dark',  
+    hole=0.4,  # Creates a donut-style chart
+    color_discrete_sequence=px.colors.qualitative.Set3  # Color palette
+    )
     
-    def generate_daily_revenue_fig():
-        daily_revenue = df.groupby('Date')['Total Price (INR)'].sum().reset_index()
-        fig = px.bar(
-            daily_revenue, x='Date', y='Total Price (INR)',
-            title='Daily Revenue',
-            template='plotly_dark',  # dark theme 
-            color_discrete_sequence=['#1f77b4']
-        )
-        return fig
-
-    def generate_popular_items_fig():
-        item_counts = df['Items Purchased'].str.split(', ', expand=True).melt()['value'].value_counts().nlargest(10)
-        fig = px.bar(
-            item_counts, x=item_counts.index, y=item_counts.values,
-            title='Top 10 Popular Items',
-            template='plotly_dark',
-            color_discrete_sequence=['#ff7f0e']
-        )
-        return fig
-
     #Layout
     dash_app.layout = dbc.Container([
         dbc.NavbarSimple(
@@ -67,12 +99,22 @@ def init_dashboard(server):
                 ])
             ]), width=4)
         ], className="mb-4"),
+        
         dbc.Row([
-            dbc.Col(dcc.Graph(id='daily-revenue', figure=generate_daily_revenue_fig()), width=12),
+            html.H2("Top 10 most sold products"),
+            dbc.Col(dcc.Graph(id='bar-chart', figure=fig), width=12),
+            #dbc.Col(dcc.Graph(id='daily-revenue', figure=generate_daily_revenue_fig()), width=12),
         ]),
-        dbc.Row([
-            dbc.Col(dcc.Graph(id='popular-items', figure=generate_popular_items_fig()), width=12),
-        ])
+
+        html.Div(children=[  
+        html.H3("Weekly Revenue Growth"),  
+        dcc.Graph(figure=fig_weekly), 
+
+        html.Div(children=[  
+        html.H3("Payment Method Distribution"),  
+        dcc.Graph(figure=fig_payment),
+    ])   
+    ])
     ], fluid=True)
 
     return dash_app.server
