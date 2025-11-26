@@ -51,21 +51,21 @@ const RevenueChart = ({ data, loading = false }) => {
     return (
         <Card sx={{
             height: '100%',
-            backgroundColor: '#2d2d2d',
-            border: '1px solid #333',
-            borderRadius: 3,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 2,
+            boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
         }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom sx={{
                     fontWeight: 'bold',
-                    color: 'white',
+                    color: 'text.primary',
                     mb: 1
                 }}>
                     Weekly Sales Trend
                 </Typography>
                 <Typography variant="body2" sx={{
-                    color: 'rgba(255,255,255,0.7)',
+                    color: 'text.secondary',
                     mb: 3,
                     fontSize: '0.875rem'
                 }}>
@@ -78,38 +78,38 @@ const RevenueChart = ({ data, loading = false }) => {
                             <XAxis
                                 dataKey="date"
                                 tickFormatter={formatDate}
-                                stroke="rgba(255,255,255,0.7)"
+                                stroke="rgba(17,24,39,0.6)"
                                 fontSize={12}
-                                tick={{ fill: 'rgba(255,255,255,0.7)' }}
+                                tick={{ fill: 'rgba(17,24,39,0.6)' }}
                             />
                             <YAxis
                                 tickFormatter={(value) => formatCurrency(value)}
-                                stroke="rgba(255,255,255,0.7)"
+                                stroke="rgba(17,24,39,0.6)"
                                 fontSize={12}
-                                tick={{ fill: 'rgba(255,255,255,0.7)' }}
+                                tick={{ fill: 'rgba(17,24,39,0.6)' }}
                             />
                             <Tooltip
                                 formatter={(value) => [formatCurrency(value), 'Revenue']}
                                 labelFormatter={(label) => `Date: ${formatDate(label)}`}
                                 contentStyle={{
-                                    backgroundColor: '#1a1a1a',
-                                    border: '1px solid #333',
+                                    backgroundColor: 'white',
+                                    border: '1px solid rgba(0,0,0,0.06)',
                                     borderRadius: '8px',
-                                    boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
-                                    color: 'white',
+                                    boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                                    color: 'rgba(17,24,39,0.9)',
                                 }}
-                                labelStyle={{ color: 'white' }}
+                                labelStyle={{ color: 'rgba(17,24,39,0.9)' }}
                             />
                             <Legend
-                                wrapperStyle={{ color: 'rgba(255,255,255,0.7)' }}
+                                wrapperStyle={{ color: 'rgba(17,24,39,0.7)' }}
                             />
                             <Line
                                 type="monotone"
                                 dataKey="revenue"
-                                stroke="#42a5f5"
+                                stroke="#1976d2"
                                 strokeWidth={3}
-                                dot={{ fill: '#42a5f5', strokeWidth: 2, r: 4 }}
-                                activeDot={{ r: 6, stroke: '#42a5f5', strokeWidth: 2 }}
+                                dot={{ fill: '#1976d2', strokeWidth: 2, r: 4 }}
+                                activeDot={{ r: 6, stroke: '#1976d2', strokeWidth: 2 }}
                             />
                         </LineChart>
                     </ResponsiveContainer>

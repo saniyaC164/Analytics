@@ -45,3 +45,7 @@ The application uses CSV data files located in:
 1. **Backend**: `python run.py`
 2. **Frontend**: `cd ca-frontend && npm start`
 3. **Both**: `scripts/start-dev.bat`
+
+
+
+

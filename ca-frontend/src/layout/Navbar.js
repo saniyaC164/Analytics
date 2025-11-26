@@ -72,21 +72,7 @@ const Navbar = ({ onMenuClick }) => {
 
                 {/* Right side - Actions */}
                 <Box display="flex" alignItems="center" gap={2}>
-                    {/* AI Active Button */}
-                    <Chip
-                        icon={<TrendingUpIcon />}
-                        label="AI Active"
-                        color="success"
-                        variant="filled"
-                        sx={{
-                            backgroundColor: '#4caf50',
-                            color: 'white',
-                            fontWeight: 'bold',
-                            '&:hover': {
-                                backgroundColor: '#45a049',
-                            }
-                        }}
-                    />
+                    {/* (AI Active removed for minimalist UI) */}
 
                     {/* Notifications */}
                     <IconButton color="inherit" sx={{ color: 'rgba(255,255,255,0.7)' }}>
@@ -138,3 +124,7 @@ const Navbar = ({ onMenuClick }) => {
 };
 
 export default Navbar;
+
+
+
+

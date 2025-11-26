@@ -63,17 +63,17 @@ const KPICard = ({
     const getCardStyle = () => {
         if (alert) {
             return {
-                backgroundColor: '#2d2d2d',
-                border: '1px solid #f44336',
+                backgroundColor: 'white',
+                border: '1px solid rgba(244,67,54,0.12)',
                 borderRadius: 3,
-                boxShadow: '0 4px 12px rgba(244, 67, 54, 0.1)',
+                boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
             };
         }
         return {
-            backgroundColor: '#2d2d2d',
-            border: '1px solid #333',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
             borderRadius: 3,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
         };
     };
 
@@ -83,117 +83,70 @@ const KPICard = ({
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
-                transition: 'all 0.3s ease-in-out',
-                ...getCardStyle(),
+                transition: 'all 0.12s ease-in-out',
+                backgroundColor: 'white',
+                border: '1px solid rgba(0,0,0,0.06)',
+                borderRadius: 2,
                 '&:hover': {
                     transform: 'translateY(-2px)',
-                    boxShadow: alert ? '0 8px 20px rgba(244, 67, 54, 0.2)' : '0 8px 20px rgba(0,0,0,0.2)',
+                    boxShadow: '0 6px 18px rgba(0,0,0,0.04)'
                 },
             }}
         >
-            <CardContent sx={{ flexGrow: 1, p: 3 }}>
-                <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={2}>
+            <CardContent sx={{ flexGrow: 1, p: 2 }}>
+                <Box display="flex" justifyContent="space-between" alignItems="flex-start" mb={1}>
                     <Box flex={1}>
                         <Typography
-                            color="rgba(255,255,255,0.7)"
+                            color="text.secondary"
                             gutterBottom
                             variant="body2"
-                            sx={{ fontWeight: 500, fontSize: '0.875rem' }}
+                            sx={{ fontWeight: 600, fontSize: '0.875rem' }}
                         >
                             {title}
                         </Typography>
                         <Typography
-                            variant="h4"
+                            variant="h5"
                             component="div"
                             sx={{
-                                fontWeight: 'bold',
-                                color: 'white',
-                                fontSize: '2rem',
-                                mb: 0.5
+                                fontWeight: 700,
+                                color: 'text.primary',
+                                fontSize: '1.5rem',
+                                mb: 0.25
                             }}
                         >
                             {formatValue(value)}
                         </Typography>
                         {subtitle && (
-                            <Typography variant="body2" color="rgba(255,255,255,0.5)" sx={{ fontSize: '0.75rem' }}>
+                            <Typography variant="caption" color="text.secondary" sx={{ fontSize: '0.75rem' }}>
                                 {subtitle}
                             </Typography>
                         )}
                     </Box>
                     {icon && (
-                        <Box
-                            sx={{
-                                p: 1.5,
-                                borderRadius: 2,
-                                backgroundColor: alert ? 'rgba(244, 67, 54, 0.1)' : 'rgba(76, 175, 80, 0.1)',
-                                color: alert ? '#f44336' : '#4caf50',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                minWidth: 48,
-                                minHeight: 48,
-                            }}
-                        >
+                        <Box sx={{
+                            p: 1,
+                            borderRadius: 1,
+                            backgroundColor: 'rgba(0,0,0,0.03)',
+                            color: '#6b7280',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            minWidth: 44,
+                            minHeight: 44,
+                        }}>
                             {icon}
                         </Box>
                     )}
                 </Box>
 
                 {change !== undefined && (
-                    <Box display="flex" alignItems="center" gap={1}>
-                        <Box
-                            sx={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: 0.5,
-                                px: 1.5,
-                                py: 0.5,
-                                borderRadius: 2,
-                                backgroundColor: changeType === 'positive' ? 'rgba(76, 175, 80, 0.1)' :
-                                    changeType === 'negative' ? 'rgba(244, 67, 54, 0.1)' : 'rgba(102, 102, 102, 0.1)',
-                            }}
-                        >
-                            {getTrendIcon()}
-                            <Typography
-                                variant="body2"
-                                sx={{
-                                    color: getChangeColor(),
-                                    fontWeight: 'bold',
-                                    fontSize: '0.75rem'
-                                }}
-                            >
-                                {change > 0 ? '+' : ''}{change}%
-                            </Typography>
-                        </Box>
-                        <Typography variant="body2" color="rgba(255,255,255,0.5)" sx={{ fontSize: '0.75rem' }}>
-                            from yesterday
+                    <Box display="flex" alignItems="center" gap={1} mt={1}>
+                        <Typography variant="body2" color={getChangeColor()} sx={{ fontWeight: 700 }}>
+                            {change > 0 ? '+' : ''}{change}%
                         </Typography>
-                    </Box>
-                )}
-
-                {progress !== undefined && (
-                    <Box mt={2}>
-                        <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
-                            <Typography variant="body2" color="rgba(255,255,255,0.7)" sx={{ fontSize: '0.75rem' }}>
-                                Progress
-                            </Typography>
-                            <Typography variant="body2" color="rgba(255,255,255,0.7)" sx={{ fontSize: '0.75rem' }}>
-                                {progress}%
-                            </Typography>
-                        </Box>
-                        <LinearProgress
-                            variant="determinate"
-                            value={progress}
-                            sx={{
-                                height: 4,
-                                borderRadius: 2,
-                                backgroundColor: 'rgba(255,255,255,0.1)',
-                                '& .MuiLinearProgress-bar': {
-                                    backgroundColor: '#4caf50',
-                                    borderRadius: 2,
-                                }
-                            }}
-                        />
+                        <Typography variant="caption" color="text.secondary">
+                            vs yesterday
+                        </Typography>
                     </Box>
                 )}
             </CardContent>

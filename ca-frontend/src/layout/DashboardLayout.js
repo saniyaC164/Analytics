@@ -100,7 +100,7 @@ const DashboardLayout = ({ children }) => {
             display: 'flex',
             flexDirection: 'column',
             minHeight: '100vh',
-            backgroundColor: '#0f0f0f',
+            backgroundColor: 'transparent',
         }}>
             {/* Main Content */}
             <Box sx={{ flexGrow: 1, pt: 8 }}>
@@ -109,9 +109,9 @@ const DashboardLayout = ({ children }) => {
                     elevation={0}
                     sx={{
                         display: { xs: 'none', md: 'block' },
-                        backgroundColor: '#1a1a1a',
+                        backgroundColor: 'transparent',
                         borderRadius: 0,
-                        borderBottom: '1px solid #333',
+                        borderBottom: '1px solid rgba(0,0,0,0.06)',
                     }}
                 >
                     <Tabs
@@ -160,8 +160,8 @@ const DashboardLayout = ({ children }) => {
                         '& .MuiDrawer-paper': {
                             boxSizing: 'border-box',
                             width: 280,
-                            backgroundColor: '#1a1a1a',
-                            color: 'white',
+                            backgroundColor: 'white',
+                            color: 'rgba(17,24,39,0.9)',
                         },
                     }}
                 >
@@ -174,7 +174,7 @@ const DashboardLayout = ({ children }) => {
                     sx={{
                         flexGrow: 1,
                         p: 3,
-                        backgroundColor: '#0f0f0f',
+                        backgroundColor: 'transparent',
                         minHeight: 'calc(100vh - 64px)',
                     }}
                 >

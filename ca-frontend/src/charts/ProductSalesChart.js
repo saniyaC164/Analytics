@@ -40,24 +40,30 @@ const ProductSalesChart = ({ data, loading = false }) => {
         return text.length > maxLength ? `${text.substring(0, maxLength)}...` : text;
     };
 
+    // ensure we only display top 5 best sellers by quantity_sold
+    const top5 = data
+        .slice()
+        .sort((a, b) => (b.quantity_sold || 0) - (a.quantity_sold || 0))
+        .slice(0, 5);
+
     return (
         <Card sx={{
             height: '100%',
-            backgroundColor: '#2d2d2d',
-            border: '1px solid #333',
-            borderRadius: 3,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 2,
+            boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
         }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom sx={{
                     fontWeight: 'bold',
-                    color: 'white',
+                    color: 'text.primary',
                     mb: 1
                 }}>
                     Menu Performance
                 </Typography>
                 <Typography variant="body2" sx={{
-                    color: 'rgba(255,255,255,0.7)',
+                    color: 'text.secondary',
                     mb: 3,
                     fontSize: '0.875rem'
                 }}>
@@ -66,7 +72,7 @@ const ProductSalesChart = ({ data, loading = false }) => {
                 <Box sx={{ height: 300, mt: 2 }}>
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart
-                            data={data}
+                            data={top5}
                             margin={{ top: 20, right: 30, left: 20, bottom: 60 }}
                             layout="horizontal"
                         >
@@ -74,37 +80,37 @@ const ProductSalesChart = ({ data, loading = false }) => {
                             <XAxis
                                 type="number"
                                 tickFormatter={formatNumber}
-                                stroke="rgba(255,255,255,0.7)"
+                                stroke="rgba(17,24,39,0.6)"
                                 fontSize={12}
-                                tick={{ fill: 'rgba(255,255,255,0.7)' }}
+                                tick={{ fill: 'rgba(17,24,39,0.6)' }}
                             />
                             <YAxis
                                 type="category"
                                 dataKey="product"
                                 tickFormatter={truncateText}
-                                stroke="rgba(255,255,255,0.7)"
+                                stroke="rgba(17,24,39,0.6)"
                                 fontSize={12}
-                                width={120}
-                                tick={{ fill: 'rgba(255,255,255,0.7)' }}
+                                width={140}
+                                tick={{ fill: 'rgba(17,24,39,0.6)' }}
                             />
                             <Tooltip
                                 formatter={(value) => [formatNumber(value), 'Quantity Sold']}
                                 labelFormatter={(label) => `Product: ${label}`}
                                 contentStyle={{
-                                    backgroundColor: '#1a1a1a',
-                                    border: '1px solid #333',
+                                    backgroundColor: 'white',
+                                    border: '1px solid rgba(0,0,0,0.06)',
                                     borderRadius: '8px',
-                                    boxShadow: '0 4px 8px rgba(0,0,0,0.3)',
-                                    color: 'white',
+                                    boxShadow: '0 6px 18px rgba(0,0,0,0.06)',
+                                    color: 'rgba(17,24,39,0.9)',
                                 }}
-                                labelStyle={{ color: 'white' }}
+                                labelStyle={{ color: 'rgba(17,24,39,0.9)' }}
                             />
                             <Legend
-                                wrapperStyle={{ color: 'rgba(255,255,255,0.7)' }}
+                                wrapperStyle={{ color: 'rgba(17,24,39,0.7)' }}
                             />
                             <Bar
                                 dataKey="quantity_sold"
-                                fill="#42a5f5"
+                                fill="#1976d2"
                                 radius={[0, 4, 4, 0]}
                             />
                         </BarChart>

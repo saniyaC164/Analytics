@@ -27,47 +27,34 @@ const KPIGrid = ({ data, loading = false }) => {
         );
     }
 
+    // Map incoming API/dashboard data to the 3 requested minimal KPIs
     const kpiData = [
         {
-            title: 'Daily Revenue',
-            value: (data.total_revenue || 0) / 30, // Approximate daily revenue
-            change: data.revenue_growth || 12.5,
-            changeType: 'positive',
+            title: "Today's Revenue",
+            value: data?.total_revenue || 0,
+            change: data?.revenue_growth || 0,
+            changeType: (data?.revenue_growth || 0) >= 0 ? 'positive' : 'negative',
             icon: <RevenueIcon />,
-            color: 'success',
             format: 'currency',
-            subtitle: 'Today\'s revenue'
+            subtitle: "Today's revenue"
         },
         {
-            title: 'Total Orders',
-            value: data.total_transactions || 342,
-            change: 8.2,
-            changeType: 'positive',
-            icon: <TransactionIcon />,
-            color: 'primary',
-            format: 'number',
-            subtitle: 'Orders processed today'
-        },
-        {
-            title: 'Customer Flow',
-            value: Math.floor((data.total_transactions || 0) * 3.5), // Estimated customer flow
-            change: -2.1,
-            changeType: 'negative',
-            icon: <CustomerIcon />,
-            color: 'info',
-            format: 'number',
-            subtitle: 'Customers served today'
-        },
-        {
-            title: 'Inventory Alert',
-            value: 3,
+            title: 'Average Order Value',
+            value: data?.avg_transaction_value || 0,
             change: 0,
             changeType: 'neutral',
-            icon: <WarningIcon />,
-            color: 'error',
+            icon: <TransactionIcon />,
+            format: 'currency',
+            subtitle: 'Average order value'
+        },
+        {
+            title: 'Transactions Today',
+            value: data?.total_transactions || 0,
+            change: data?.transaction_growth || 0,
+            changeType: (data?.transaction_growth || 0) >= 0 ? 'positive' : 'negative',
+            icon: <TransactionIcon />,
             format: 'number',
-            subtitle: 'Items low in stock',
-            alert: true
+            subtitle: 'Transactions today'
         }
     ];
 

@@ -74,21 +74,21 @@ const PaymentMethodChart = ({ data, loading = false }) => {
     return (
         <Card sx={{
             height: '100%',
-            backgroundColor: '#2d2d2d',
-            border: '1px solid #333',
-            borderRadius: 3,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+            backgroundColor: 'white',
+            border: '1px solid rgba(0,0,0,0.06)',
+            borderRadius: 2,
+            boxShadow: '0 6px 18px rgba(0,0,0,0.04)',
         }}>
             <CardContent>
                 <Typography variant="h6" gutterBottom sx={{
                     fontWeight: 'bold',
-                    color: 'white',
+                    color: 'text.primary',
                     mb: 1
                 }}>
                     Payment Method Distribution
                 </Typography>
                 <Typography variant="body2" sx={{
-                    color: 'rgba(255,255,255,0.7)',
+                    color: 'text.secondary',
                     mb: 3,
                     fontSize: '0.875rem'
                 }}>
@@ -104,7 +104,7 @@ const PaymentMethodChart = ({ data, loading = false }) => {
                                 labelLine={false}
                                 label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
                                 outerRadius={80}
-                                fill="#8884d8"
+                                fill="#1976d2"
                                 dataKey="value"
                             >
                                 {chartData.map((entry, index) => (
@@ -118,7 +118,7 @@ const PaymentMethodChart = ({ data, loading = false }) => {
                                 formatter={(value, entry) => (
                                     <span style={{ color: entry.color }}>{value}</span>
                                 )}
-                                wrapperStyle={{ color: 'rgba(255,255,255,0.7)' }}
+                                wrapperStyle={{ color: 'rgba(17,24,39,0.7)' }}
                             />
                         </PieChart>
                     </ResponsiveContainer>
